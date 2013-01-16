@@ -1,3 +1,8 @@
 Converts a subset of markdown into the confluence wiki markup.
 
+Forked from https://github.com/dirkk0/Markdown-Converter
+
+Updated by Matt Brown:
+* Print converted text to standard output rather than storing in a file (so it can be piped to other programs like pbcopy)
+* Supported nested lists that are nested with spaces instead of tabs (for editors that use four spaces to represent a tab rather than a tab character)
 
