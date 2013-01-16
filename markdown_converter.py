@@ -65,12 +65,14 @@ def convertText(c):
                     k = '{code}\n'+k[indent:]              
                     isCode = 1
         else:
-            if l[0:4]=='\t\t\t*':
-                k = '****' + l[4:]
-            if l[0:3]=='\t\t*':
-                k = '***' + l[3:]
-            if l[0:2]=='\t*':
-                k = '**' + l[2:]
+            # is list
+            # figure out nesting level
+            for i in [1, 2, 3, 4]:
+                # allow the markdown text to be nested using either a tab character or four spaces
+                for ch in ['    ', '\t']:
+                    marker = ch * i
+                    if l.startswith(marker):
+                        k = '*' * i + l[len(marker):]
 
         for w in words:
             if l[:len(w[0])] == w[0]:
