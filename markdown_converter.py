@@ -32,16 +32,13 @@ def convertText(c):
 
     newContent = []
 
-    i = 0
     isCode = 0
     indent = 0
     isQuote = 0
     isList = 0
 
     for l in c:
-      i += 1
       if 0 == 0:
-        # print l[:30]
         k = l
         if l[0:1]=='*':
           isList = 1
@@ -90,9 +87,6 @@ def convertText(c):
 
         if l[0:3] != '| -':
           newContent.append(k)
-
-        # print k
-        i# newContent.append(k)
 
     return '\n'.join(newContent)
 
