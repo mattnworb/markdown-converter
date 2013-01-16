@@ -97,32 +97,12 @@ def convertText(c):
     return '\n'.join(newContent)
 
 
-
-def convertFile(filename):
-  old_content = open(filename, 'r').read()
-  new_content = convertText(old_content)
-  open(filename+'.txt','w').write(new_content)
-  print "converted",filename
-
-
-
-def convertAllFiles(dirname):
-  f_counter = 0
-  for f in os.listdir(dirname):
-
-      fname = os.path.join(dirname,f)
-
-      if fname[-3:] =='.md':
-          f_counter += 1
-          convertFile(fname)
-
-
 if __name__=='__main__':
 
 
     if len(sys.argv)<2:
-        convertAllFiles(".")
-        sys.exit()
+        print "Usage: markdown_converter.py <input file>"
+        sys.exit(1)
 
     infile = sys.argv[1]
 
@@ -130,10 +110,8 @@ if __name__=='__main__':
         sys.stderr("%s does not exist!" %infile)
         sys.exit(15)
 
-    if os.path.isdir(infile):
-        convertAllFiles(infile)
-
-    else:
-        convertFile(infile)
+    with open(infile, 'r') as f:
+        text = f.read()
+        print convertText(text)
 
 
