@@ -28,6 +28,7 @@ def convertText(c):
     words.append( ['####','h4.'] )
     words.append( ['#####','h5.'] )
     words.append( ['######','h6.'] )
+    words.append( ['---', '----'] )
 
     newContent = []
 
