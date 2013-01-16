@@ -31,39 +31,36 @@ def convertText(c):
 
     newContent = []
 
-    isCode = 0
     indent = 0
-    isQuote = 0
-    isList = 0
+    isCode, isQuote, isList = False, False, False
 
     for l in c:
         k = l
         if l[0:1]=='*':
-            isList = 1
+            isList = True
         if l == '':
-            isList = 0
+            isList = False
 
         if l[0:1] == '>':
-            if isQuote==0:
-                k = '{quote}\n'+k[1:]
-                isQuote = 1
-            else:
+            if isQuote:
                 k = k[1:]
+            else:
+                k = '{quote}\n'+k[1:]
+                isQuote = True
 
-
-        if isList == 0:
-            if isCode == 1:
+        if not isList:
+            if isCode:
                 if l[0:1] == ' ' or l[0:1]=='\t':
                     k = k[indent:]  
                 else:
                     k = '{code}\n'+k
-                    isCode = 0
+                    isCode = False
                     indent = -1
             else:
                 if l[0:1]==' ' or l[0:1]=='\t':
                     indent = len(k)-len(k.lstrip())
                     k = '{code}\n'+k[indent:]              
-                    isCode = 1
+                    isCode = True
         else:
             # is list
             # figure out nesting level
@@ -78,11 +75,9 @@ def convertText(c):
             if l[:len(w[0])] == w[0]:
                 k = w[1]+l[len(w[0]):]
 
-
         if l[0:1] != '>' and isQuote == 1:
             k = '{quote}\n'+k
-            isQuote = 0
-
+            isQuote = False
 
         if l[0:3] != '| -':
             newContent.append(k)
